@@ -1,0 +1,1 @@
+char *cypher(char *str, int size, int key);
