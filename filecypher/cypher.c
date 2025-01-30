@@ -2,14 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void crypt(char *filename, char key, int state)
+void crypt(char *filename, char *key, int state)
 {
     FILE *toEncrypt = fopen(filename, "rb");
-    FILE *encrypted;
-    if (state == 0)
-        encrypted = fopen("encrypted.pdf", "wb");
-    else
-        encrypted = fopen("decrypted.pdf", "wb");
     if (toEncrypt == NULL)
     {
         perror("Well shit\n");
@@ -21,30 +16,36 @@ void crypt(char *filename, char key, int state)
     char *buffer;
     buffer = malloc(fileSize);
     fread(buffer, sizeof(char), fileSize / sizeof(char), toEncrypt);
+    size_t length = strlen(key);
     for (long long i = 0; i < fileSize / sizeof(char); i++)
     {
         if (state == 0)
-            buffer[i] += key;
+            buffer[i] += key[i % length];
         else
-            buffer[i] -= key;
+            buffer[i] -= key[i % length];
     }
-    fwrite(buffer, fileSize, 1, encrypted);
     fclose(toEncrypt);
-    fclose(encrypted);
+    remove(filename);
+    toEncrypt = fopen(filename, "wb");
+    fwrite(buffer, fileSize, 1, toEncrypt);
     free(buffer);
 }
 
 int main(int argc, char *argv[])
 {
-    if (argc != 3)
+    if (argc != 4)
         exit(1);
     int state = 0;
     char *initial = "0";
-    if (strcmp(argv[2], initial) == 0)
+    if (strcmp(argv[3], initial) == 0)
+    {
 
         state = 0;
-
+        crypt(argv[1], argv[2], state);
+    }
     else
+    {
         state = 1;
-    crypt(argv[1], 23, state);
+        crypt(argv[1], argv[2], state);
+    }
 }
