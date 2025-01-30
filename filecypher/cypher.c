@@ -11,7 +11,6 @@ void crypt(char *filename, char *key, int state)
     }
     fseek(toEncrypt, 0, SEEK_END);
     long long fileSize = ftell(toEncrypt);
-    printf("%d\n", fileSize);
     fseek(toEncrypt, 0, SEEK_SET);
     char *buffer;
     buffer = malloc(fileSize);
@@ -25,7 +24,11 @@ void crypt(char *filename, char *key, int state)
             buffer[i] -= key[i % length];
     }
     fclose(toEncrypt);
-    remove(filename);
+    if (remove(filename) != 0)
+    {
+        printf("Fatal failure");
+        exit(1);
+    }
     toEncrypt = fopen(filename, "wb");
     fwrite(buffer, fileSize, 1, toEncrypt);
     free(buffer);
