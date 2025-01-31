@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+int hash(size_t length, size_t i, char c)
+{
+    return ((i + c) % length);
+}
 void crypt(char *filename, char *key, int state)
 {
     FILE *toEncrypt = fopen(filename, "rb");
@@ -19,9 +23,9 @@ void crypt(char *filename, char *key, int state)
     for (long long i = 0; i < fileSize / sizeof(char); i++)
     {
         if (state == 0)
-            buffer[i] += key[i % length];
+            buffer[i] += key[hash(length, i, key[i % length])];
         else
-            buffer[i] -= key[i % length];
+            buffer[i] -= key[hash(length, i, key[i % length])];
     }
     fclose(toEncrypt);
     if (remove(filename) != 0)
