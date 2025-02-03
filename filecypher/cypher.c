@@ -13,13 +13,17 @@ void crypt(char *filename, char *key, int state)
     {
         perror("Well shit\n");
     }
+    // get file size
     fseek(toEncrypt, 0, SEEK_END);
     long long fileSize = ftell(toEncrypt);
     fseek(toEncrypt, 0, SEEK_SET);
+    // create buffer to store the same amount of data as the file
     char *buffer;
     buffer = malloc(fileSize);
+    // store file in buffer
     fread(buffer, sizeof(char), fileSize / sizeof(char), toEncrypt);
     size_t length = strlen(key);
+    // encrypt or decrypt the buffer
     for (long long i = 0; i < fileSize / sizeof(char); i++)
     {
         if (state == 0)
@@ -27,12 +31,15 @@ void crypt(char *filename, char *key, int state)
         else
             buffer[i] -= key[hash(length, i, key[i % length])];
     }
+    // close file and delete file
     fclose(toEncrypt);
     if (remove(filename) != 0)
     {
         printf("Fatal failure");
         exit(1);
     }
+    // create new file with same name as original
+    // this is done to avoid permission denied issues
     toEncrypt = fopen(filename, "wb");
     fwrite(buffer, fileSize, 1, toEncrypt);
     free(buffer);
