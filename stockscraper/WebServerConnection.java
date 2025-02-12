@@ -85,11 +85,10 @@ public class WebServerConnection {
             String result = subLine.substring(token.length(), endIndex - 1);
 
             LocalDateTime date = (java.time.LocalDateTime.now());
-            String rawTime = date.toString();
-            String[] parts = rawTime.split("T");
-            String hour = parts[1].substring(0, parts[1].indexOf('.'));
 
-            System.out.println("The value of the stock " + args[0].toUpperCase() + " is " + result + "$ at " + hour + " on date " + parts[0]);
+            StockLog stock = new StockLog(result, args[0], date);
+
+            System.out.println("The value of the stock " + stock.getSymbol().toUpperCase() + " is " + result + "$ at " + stock.getFormattedTime());
 
             reader.close();
 
