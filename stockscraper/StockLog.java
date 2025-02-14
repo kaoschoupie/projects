@@ -116,7 +116,7 @@ public class StockLog implements Serializable {
                 + stock.getFormattedTime());
 
         ObjectOutputStream write = null;
-        ArrayList<StockLog> currentLog = readLog();
+        ArrayList<StockLog> currentLog = getLog();
         if (currentLog == null) {
             currentLog = new ArrayList<>();
         }
@@ -131,7 +131,7 @@ public class StockLog implements Serializable {
 
     }
 
-    public static ArrayList<StockLog> readLog() {
+    public static ArrayList<StockLog> getLog() {
         ObjectInputStream reader = null;
         try {
             reader = new ObjectInputStream(new FileInputStream(FILENAME));
@@ -144,6 +144,17 @@ public class StockLog implements Serializable {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static ArrayList<StockLog> getStockLog(String symbol) {
+        ArrayList<StockLog> output = new ArrayList<>();
+        ArrayList<StockLog> log = getLog();
+        for (int i = 0; i < log.size(); i++) {
+            if (log.get(i).getSymbol().equals(symbol)) {
+                output.add(log.get(i));
+            }
+        }
+        return output;
     }
 
     public static void clearLog() {

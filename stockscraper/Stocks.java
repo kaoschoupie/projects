@@ -74,7 +74,8 @@ public class Stocks {
             try {
                 option = kb.nextInt();
             } catch (InputMismatchException e) {
-
+                System.out.println("\nPlease enter a number\n");
+                continue;
             }
 
             switch (option) {
@@ -94,7 +95,7 @@ public class Stocks {
                 }
 
                 case 2: {
-                    ArrayList<StockLog> log = StockLog.readLog();
+                    ArrayList<StockLog> log = StockLog.getLog();
                     for (int idx = 0; idx < log.size(); idx++) {
                         System.out.println(log.get(idx));
 
@@ -108,13 +109,23 @@ public class Stocks {
                     String choice = kb.next();
                     if (choice.equals("Y")) {
                         StockLog.clearLog();
+                        System.out.println("Log cleared");
                     }
 
                     break;
                 }
 
                 case 4: {
-
+                    System.out.println("Which stock history do you want to retrieve from the log (input the symbol):");
+                    String symbol = kb.next().toUpperCase();
+                    ArrayList<StockLog> stock = StockLog.getStockLog(symbol);
+                    if (stock.isEmpty()) {
+                        System.out.println("You have no recorded log for the stock " + symbol);
+                        break;
+                    }
+                    for (int idx = 0; idx < stock.size(); idx++) {
+                        System.out.println(stock.get(idx));
+                    }
                     break;
                 }
 
