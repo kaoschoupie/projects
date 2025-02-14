@@ -146,6 +146,17 @@ public class StockLog implements Serializable {
         }
     }
 
+    public static void clearLog() {
+        ObjectOutputStream write = null;
+        try {
+            write = new ObjectOutputStream(new FileOutputStream(FILENAME));
+            write.writeObject(null);
+            write.close();
+        } catch (Exception e) {
+
+        }
+    }
+
     @Override
     public String toString() {
         String output = "The stock " + symbol + " trading at " + quote + "$ at " + getFormattedTime();

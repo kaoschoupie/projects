@@ -1,0 +1,1 @@
+This java program can retrieve a stock's quote from finance.yahoo.com and log its information

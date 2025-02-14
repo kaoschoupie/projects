@@ -103,6 +103,12 @@ public class Stocks {
                 }
 
                 case 3: {
+                    System.out.println("Are you sure you want to clear the log? This action is irreversible");
+                    System.out.print("Y/n:");
+                    String choice = kb.next();
+                    if (choice.equals("Y")) {
+                        StockLog.clearLog();
+                    }
 
                     break;
                 }
