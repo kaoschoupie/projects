@@ -1,13 +1,18 @@
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
-public class StockLog {
+public class StockLog implements Serializable {
 
+    public static final String FILENAME = "log.bin";
     private String quote;
     private String symbol;
     private LocalDateTime time;
@@ -16,6 +21,10 @@ public class StockLog {
         this.quote = quote;
         this.symbol = symbol.toUpperCase();
         this.time = time;
+    }
+
+    public StockLog(StockLog other) {
+        this(other.quote, other.symbol, other.time);
     }
 
     public StockLog() {
@@ -103,17 +112,38 @@ public class StockLog {
 
         StockLog stock = new StockLog(result, symbol, date);
 
-        System.out.println("The value of the stock " + stock.getSymbol().toUpperCase() + " is " + result + "$ at " + stock.getFormattedTime());
+        System.out.println("The value of the stock " + stock.getSymbol().toUpperCase() + " is " + result + "$ at "
+                + stock.getFormattedTime());
 
         ObjectOutputStream write = null;
+        ArrayList<StockLog> currentLog = readLog();
+        if (currentLog == null) {
+            currentLog = new ArrayList<>();
+        }
+        currentLog.add(stock);
         try {
-            write = new ObjectOutputStream(new FileOutputStream("log.bin", true));
-            write.writeObject(stock);
+            write = new ObjectOutputStream(new FileOutputStream(FILENAME));
+            write.writeObject(currentLog);
             write.close();
         } catch (Exception e) {
             System.out.println("Failed to write the log");
         }
 
+    }
+
+    public static ArrayList<StockLog> readLog() {
+        ObjectInputStream reader = null;
+        try {
+            reader = new ObjectInputStream(new FileInputStream(FILENAME));
+
+            ArrayList<StockLog> log = (ArrayList<StockLog>) reader.readObject();
+
+            reader.close();
+            return log;
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
