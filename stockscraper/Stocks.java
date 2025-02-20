@@ -65,11 +65,11 @@ public class Stocks {
     }
 
     public static void main(String[] args) {
+        Scanner kb = new Scanner(System.in);
         while (true) {
             menu();
             System.out.print("Enter your choice: ");
             int option = 0;
-            Scanner kb = new Scanner(System.in);
 
             try {
                 option = kb.nextInt();
@@ -129,8 +129,14 @@ public class Stocks {
                     break;
                 }
 
+                case 5: {
+
+                    break;
+                }
+
                 case 0: {
                     System.out.print("Goodbye");
+                    kb.close();
                     System.exit(0);
                 }
                 default: {
