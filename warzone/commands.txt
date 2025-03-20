@@ -1,0 +1,1 @@
+tournament -M res/map/lp.map,res/map/Cobra.map -P neutral,aggressive -G 5 -D 30

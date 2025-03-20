@@ -1,0 +1,6 @@
+res/map/asia-1200.map
+res/map/Colorado.map
+res/map/Flower Z.map
+res/map/invalid.map
+res/map/King of the Hills.map
+res/map/lp.map

@@ -1,0 +1,47 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "base-configure",
+            "hidden": true,
+            "binaryDir": "${sourceDir}"
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "inherits": "base-configure",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "description": "Sets Ninja generator, build and install directory",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "base-build",
+            "hidden": true
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "inherits": "base-build",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "inherits": "base-build",
+            "configurePreset": "release"
+        }
+    ]
+}
