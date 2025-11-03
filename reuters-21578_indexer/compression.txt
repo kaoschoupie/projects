@@ -1,0 +1,7 @@
+Initial size: 65419 | postings: 1912832
+The following numbers are the losses, not the new size
+Numbers: terms: relative-loss total-loss | postings: relative-loss total-lossAfter 'no number': 4811 4811 | postings: 194235 194235
+After 'case folding': 16954 21765 | postings: 129179 323414
+After '30 stopwords': 30 21795 | postings: 308032 631446
+After '150 stopwords': 120 21915 | postings: 312608 944054
+After 'stemming': 10855 32770 | postings: 47875 991929
