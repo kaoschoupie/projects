@@ -1,0 +1,45 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "base-configure",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+
+        {
+            "name": "release",
+            "displayName": "Release",
+            "inherits": "base-configure",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "inherits": "base-configure",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "base-build",
+            "hidden": true
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "inherits": "base-build",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "inherits": "base-build",
+            "configurePreset": "release"
+        }
+    ]
+}
