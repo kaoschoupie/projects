@@ -53,13 +53,11 @@ int main(int argc, char *argv[])
     char *initial = "0";
     if (strcmp(argv[3], initial) == 0)
     {
-
         state = 0;
-        crypt(argv[1], argv[2], state);
     }
     else
     {
         state = 1;
-        crypt(argv[1], argv[2], state);
     }
+    crypt(argv[1], argv[2], state);
 }
