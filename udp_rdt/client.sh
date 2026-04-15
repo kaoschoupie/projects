@@ -1,0 +1,1 @@
+sudo ip netns exec ns_client bash -lc "python3 -u src/client_driver.py 10.200.1.2 --ip 10.200.1.2 --port 9000 --filename images.jpg --segment-size 512"

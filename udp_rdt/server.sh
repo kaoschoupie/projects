@@ -1,0 +1,1 @@
+sudo ip netns exec ns_server bash -lc "python3 -u src/server_driver.py --port 9000 --segment-size 512"
